@@ -144,6 +144,8 @@ class IntroductionScreen extends StatefulWidget {
   /// ScrollController of vertical SingleChildScrollView
   final ScrollController? scrollController;
 
+  final PageController? horizontalScrollController;
+
   /// Scroll/Axis direction of pages, can he horizontal or vertical
   ///
   /// @Default `Axis.horizontal`
@@ -198,6 +200,7 @@ class IntroductionScreen extends StatefulWidget {
     this.pagesAxis = Axis.horizontal,
     this.scrollPhysics = const BouncingScrollPhysics(),
     this.rtl = false,
+    this.horizontalScrollController,
   })  : assert(pages != null || rawPages != null),
         assert(
           (pages != null && pages.length > 0) ||
@@ -228,7 +231,8 @@ class IntroductionScreenState extends State<IntroductionScreen> {
     super.initState();
     int initialPage = min(widget.initialPage, getPagesLength() - 1);
     _currentPage = initialPage.toDouble();
-    _pageController = PageController(initialPage: initialPage);
+    _pageController = widget.horizontalScrollController ??
+        PageController(initialPage: initialPage);
   }
 
   int getPagesLength() {
